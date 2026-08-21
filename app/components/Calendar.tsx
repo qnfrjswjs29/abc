@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { HOLIDAYS } from "../lib/holidays";
 
 type EventItem = {
   id: string;
@@ -167,10 +168,12 @@ export default function Calendar() {
         {days.map((date, i) => {
           const key = toDateKey(date);
           const dayEvents = events[key] ?? [];
+          const holidayName = HOLIDAYS[key];
           const isCurrentMonth = date.getMonth() === monthAnchor.getMonth();
           const isToday = isSameDay(date, today);
           const isSelected = isSameDay(date, selectedDate);
           const weekday = date.getDay();
+          const isRedDay = weekday === 0 || Boolean(holidayName);
 
           return (
             <button
@@ -185,7 +188,7 @@ export default function Calendar() {
                 className={`flex h-6 w-6 items-center justify-center rounded-full text-xs ${
                   isToday ? "bg-blue-600 font-semibold text-white" : ""
                 } ${
-                  !isToday && weekday === 0
+                  !isToday && isRedDay
                     ? "text-red-500"
                     : !isToday && weekday === 6
                       ? "text-blue-500"
@@ -196,6 +199,11 @@ export default function Calendar() {
               >
                 {date.getDate()}
               </span>
+              {holidayName && (
+                <span className="block w-full truncate text-[9px] font-medium text-red-500">
+                  {holidayName}
+                </span>
+              )}
               <div className="flex w-full flex-col gap-0.5">
                 {dayEvents.slice(0, 2).map((ev) => (
                   <span
@@ -217,6 +225,9 @@ export default function Calendar() {
       <div className="mt-6 rounded-lg border border-black/10 p-4 dark:border-white/15">
         <h2 className="mb-3 text-sm font-semibold text-black dark:text-zinc-50">
           {selectedDate.getFullYear()}년 {selectedDate.getMonth() + 1}월 {selectedDate.getDate()}일 일정
+          {HOLIDAYS[selectedKey] && (
+            <span className="ml-2 text-red-500">· {HOLIDAYS[selectedKey]}</span>
+          )}
         </h2>
 
         <form onSubmit={handleAddEvent} className="mb-4 flex flex-col gap-2 sm:flex-row">
