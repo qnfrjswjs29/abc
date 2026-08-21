@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "일정 관리 캘린더",
+  title: "ABC캘린더",
   description: "월간 캘린더로 일정을 등록하고 관리하세요.",
 };
 

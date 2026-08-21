@@ -120,7 +120,7 @@ export default function Calendar() {
   }
 
   return (
-    <div className="w-full max-w-3xl">
+    <div className="w-full max-w-3xl rounded-xl bg-white/95 p-4 shadow-lg backdrop-blur-sm dark:bg-black/85 sm:p-6">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-semibold text-black dark:text-zinc-50">
           {monthAnchor.getFullYear()}년 {monthAnchor.getMonth() + 1}월
